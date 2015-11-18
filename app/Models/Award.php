@@ -39,5 +39,14 @@ class Award extends Model {
     public static function createAward($data) {
         return Award::create($data);
     }  
+    
+    public static function getAwardByPriod($id){
+        return Award::all()->where('priod_id',$id)->all();        
+    }
+    
+    public static function getAwardByStudentId($studentId){
+        
+        return Award::all()->where('student_id',$studentId)->all();
+    }
 
 }

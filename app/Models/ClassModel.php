@@ -58,14 +58,21 @@ class ClassModel extends Model {
     public static function getAllClass() {
         return ClassModel::all();
     }
-    
+
     /**
      * get class by priod id
      * @param type $priodId
      * @return type
      */
-    public static function getClassByPriod($priodId){
-        return ClassModel::all()->where('priod_id',$priodId)->all();        
+    public static function getClassByPriod($priodId) {
+        return ClassModel::all()->where('priod_id', $priodId)->all();
+    }
+
+    
+    public static function getClassByTeacherId($id) {
+        return ClassModel::all()
+                        ->where('teacher_manage_id', $id)
+                        ->all();
     }
 
 }

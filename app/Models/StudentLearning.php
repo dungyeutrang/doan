@@ -32,12 +32,12 @@ class StudentLearning extends Model {
     }
 
     public static function getStudentForCreateStudentLearning() {
-        $studentNews = DB::table('tbl_students')->select(array('*', DB::raw('is_new as orderStudent')))->where('is_new', 1);
+        $studentNews = DB::table('tbl_students')->select(array('*', DB::raw('is_new as orderStudent')))->where('is_new', 1)->whereNull('deleted_at');
         $students = Student::query()
                 ->join('tbl_student_learning_class', function($join) {
                     $join->on('tbl_student_learning_class.student_id', '=', 'tbl_students.id')
                     ->where('is_current', '=', 1)
-                    ->whereNull('tbl_students.deleted_at');                            
+                    ->whereNull('tbl_students.deleted_at');
                 })
                 ->where('is_new', 0)
                 ->whereNull('tbl_student_learning_class.deleted_at')
@@ -116,7 +116,7 @@ class StudentLearning extends Model {
                     $join->on('tbl_students.id', "=", 'tbl_student_learning_class')
                     ->where('tbl_students.status', 1)
                     ->where('tbl_students.is_new', 0)
-                    ->whereNull('tbl_students.deleted_at');        
+                    ->whereNull('tbl_students.deleted_at');
                 })
                 ->whereNull('tbl_student_learning_class.deleted_at')
                 ->orderBy('class_id', 'asc')
@@ -127,20 +127,49 @@ class StudentLearning extends Model {
     public static function getStudentLearningByPriod($priodId) {
         $data = StudentLearning::where('priod_id', $priodId)
                 ->join('tbl_summaries', function($join) {
-                    $join->on('tbl_summaries.student_learning_class_id', '=' ,'tbl_student_learning_class.id')
-                          ->whereNull('tbl_summaries.deleted_at');
+                    $join->on('tbl_summaries.student_learning_class_id', '=', 'tbl_student_learning_class.id')
+                    ->whereNull('tbl_summaries.deleted_at');
                 })
                 ->orderBy('class_id', 'asc')
                 ->whereNull('tbl_student_learning_class.deleted_at')
                 ->get();
-       return $data;         
+        return $data;
+    }
+
+    public static function getTeacherOfStudent($studentId, $priodId) {
+        return StudentLearning::all()
+                        ->where('student_id', $studentId)
+                        ->where('priod_id', $priodId)
+                        ->first();
+    }
+
+    public static function getByPriodId($id) {
+
+        return StudentLearning::all()->where('priod_id', $id)->all();
+    }
+
+    public static function getStudentLearningByStudentId($studentId) {
+        return StudentLearning::all()
+                        ->where('student_id', $studentId)
+                        ->all();
+    }
+
+    public static function getStudentLearningByTeacherId($teacherId) {
+
+        return StudentLearning::query()
+                        ->join('tbl_class', function($join)use($teacherId) {
+                            $join->on('tbl_class.id', '=', 'tbl_student_learning_class.class_id')
+                            ->where('teacher_manage_id', '=', $teacherId)
+                            ->whereNull('tbl_class.deleted_at');
+                        })
+                        ->whereNull('tbl_student_learning_class.deleted_at')
+                        ->get();
+    }
+
+    public static function getStudentLearningByClassId($classId) {
+        return StudentLearning::all()->where('class_id', $classId)->all();
     }
     
-    public static function getTeacherOfStudent($studentId,$priodId){        
-        return StudentLearning::all()
-                                ->where('student_id', $studentId)
-                                ->where('priod_id', $priodId)
-                                ->first();
-    }
+    
 
 }

@@ -62,7 +62,7 @@
                     <td>{{$class->priod->name}}</td>
                     <td><a href="{{route('admin.class.edit',['id'=>$class->id])}}"
                            class="btn btn-info">Edit</a></td>
-                    <td><a href="{{route('admin.class.delete',['id'=>$class->id])}}"
+                    <td><a  onclick="confirmDelete(this)" url="{{route('admin.class.delete',['id'=>$class->id])}}"
                            class="btn btn-danger">Delete</a></td>
                 </tr>
                 @endforeach

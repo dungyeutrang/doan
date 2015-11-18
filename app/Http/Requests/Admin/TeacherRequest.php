@@ -28,8 +28,7 @@ class TeacherRequest extends Request {
             'address' => 'required|max:256',
             'native_place' => 'required|max:256',
             'gender' => 'boolean',
-            'date_in' => 'required|date',
-            'date_out' => 'date',
+            'date_in' => 'required|date',       
         ];
     }
 

@@ -38,7 +38,7 @@
 <div clas="row ibox float-e-margins">
     <div class="ibox-title">
         <h5>List Detail</h5>
-        <a href="{{route('admin.student.edit')}}" class="btn btn-primary pull-right">List Student</a>
+        <a href="{{route('admin.student.edit')}}" class="btn btn-primary pull-right">Add Student</a>
     </div>
     <div class="ibox-content">
         <table
@@ -72,7 +72,7 @@
                     <td><a href="{{route('admin.student.edit',['id'=>$student->id])}}"
                            class="btn btn-info">{{trans('admin/student_index.edit')}}</a></td>
                     <td><a
-                            href="{{route('admin.student.delete',['id'=>$student->id])}}"
+                             onclick="confirmDelete(this)" url="{{route('admin.student.delete',['id'=>$student->id])}}"
                             class="btn btn-danger">{{trans('admin/student_index.delete')}}</a></td>
                 </tr>
                 @endforeach

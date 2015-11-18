@@ -119,7 +119,7 @@
                     Learning
                 </label>
                 @else
-                @if(!$student->gender)
+                @if(!$student->status)
                 <label class="checkbox-inline"> 
                     {!! Form::radio('status',0,true)!!}
                     Stop

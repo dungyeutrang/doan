@@ -64,7 +64,7 @@
                             href="{{route('admin.teachingclass.edit',['id'=>$teachingClass->id])}}"
                             class="btn btn-info">{{trans('admin/teachingclass_index.edit')}}</a></td>
                     <td><a
-                            href="{{route('admin.teachingclass.delete',['id'=>$teachingClass->id])}}"
+                             onclick="confirmDelete(this)" url="{{route('admin.teachingclass.delete',['id'=>$teachingClass->id])}}"
                             class="btn btn-danger">{{trans('admin/teachingclass_index.delete')}}</a></td>
                 </tr>
                 @endforeach

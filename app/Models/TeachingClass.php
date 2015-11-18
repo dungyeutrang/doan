@@ -60,4 +60,31 @@ class TeachingClass extends Model {
         return TeachingClass::all();
     }
 
+    public static function getAllTeachingClassByPriodId($priodId) {
+        return TeachingClass::query()
+                        ->join('tbl_class', function($join) use($priodId) {
+                            $join->on('tbl_class.id', '=', 'tbl_teaching_class.class_id')
+                            ->where('priod_id', '=', $priodId)
+                            ->whereNull('tbl_class.deleted_at');
+                        })
+                        ->whereNull('tbl_teaching_class.deleted_at')
+                        ->get();
+    }
+
+    public static function getTeachingClassByTeacherId($teacherId) {
+
+        return TeachingClass::query()
+                        ->join('tbl_class', function($join) use($teacherId) {
+                            $join->on('tbl_class.id', '=', 'tbl_teaching_class.class_id')
+                            ->where('teacher_manage_id', '=', $teacherId)
+                            ->whereNull('tbl_class.deleted_at');
+                        })
+                        ->whereNull('tbl_teaching_class.deleted_at')
+                        ->get();
+    }
+
+    public static function getTeachingClassByClassId($classId) {
+        return TeachingClass::all()->where('class_id', $classId)->all();
+    }
+
 }

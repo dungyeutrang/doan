@@ -17,10 +17,10 @@ class Score extends Model {
      * create relative with tbl_student table
      * @return ralation
      */
-    public function student(){
+    public function student() {
         return $this->belongsTo('App\Models\Student', 'student_id');
     }
-    
+
     /**
      * create relation with tbl_subject table
      */
@@ -81,12 +81,25 @@ class Score extends Model {
      * @param type $priodId
      * @return array
      */
-    public static function getTeacherByStudentAndPriod($studentId,$priodId){      
+    public static function getTeacherByStudentAndPriod($studentId, $priodId) {
         return Score::query()
-                ->where('student_id', $studentId)
-                ->where('priod_id',$priodId)
-                ->whereNull('deleted_at')
-                ->groupBy("teacher_id")
-                ->get();
+                        ->where('student_id', $studentId)
+                        ->where('priod_id', $priodId)
+                        ->whereNull('deleted_at')
+                        ->groupBy("teacher_id")
+                        ->get();
     }
+
+    public static function getByPriod($priodId) {
+        return Priod::all()->where('priod_id', $priodId)->all();
+    }
+
+    public static function getScoreByStudentId($studentId) {
+        return Score::all()->where('student_id', $studentId)->all();
+    }
+
+    public static function getScoreBySubjectId($subjectId) {
+        return Score::all()->where('subject_id', $subjectId)->all();
+    }
+
 }

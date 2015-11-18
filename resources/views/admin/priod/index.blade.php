@@ -63,7 +63,7 @@
                     <td>{{$priod->date_end}}</td>
                     <td><a href="{{route('admin.priod.edit',['id'=>$priod->id])}}"
                            class="btn btn-info">{{trans('admin/priod_index.edit')}}</a></td>
-                    <td><a href="{{route('admin.priod.delete',['id'=>$priod->id])}}"
+                    <td><a  onclick="confirmDelete(this)" url="{{route('admin.priod.delete',['id'=>$priod->id])}}"
                            class="btn btn-danger">{{trans('admin/priod_index.delete')}}</a></td>
                 </tr>
                 @endforeach
